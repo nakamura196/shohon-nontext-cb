@@ -15,7 +15,6 @@ config_labels:
     canvas_index: Canvas index
     kansha: Manuscript / Printed
     has_text: Text presence (has_text)
-    is_work_text: Work text (is_work_text)
     page_type: Page type (page_type)
     imaging_targets: Imaging targets & illustration
     ruler: Ruler (ruler)

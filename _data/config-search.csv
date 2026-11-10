@@ -5,7 +5,6 @@ book_title,true,true
 bid,true,false
 kansha,true,false
 has_text,true,true
-is_work_text,true,false
 page_type,true,true
 imaging_targets,true,true
 verification,true,true

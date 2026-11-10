@@ -71,7 +71,7 @@ year-nav-increment: 10
 ##########
 # DATA
 #
-metadata-export-fields: "objectid,title,work,book_title,bid,canvas_index,kansha,has_text,is_work_text,page_type,imaging_targets,ruler,colorchart,illustration,verification,correction_detail,has_text_source,p_text,ocr_chars,dimensions,fingerprints,description,rights,source,canvas_uri,manifest"
+metadata-export-fields: "objectid,title,work,book_title,bid,canvas_index,kansha,has_text,page_type,imaging_targets,ruler,colorchart,illustration,verification,correction_detail,has_text_source,p_text,ocr_chars,dimensions,fingerprints,description,rights,source,canvas_uri,manifest"
 metadata-facets-fields: "has_text,page_type,imaging_targets,verification,work,kansha"
 
 ##########

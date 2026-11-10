@@ -20,7 +20,7 @@ Because 95.3% (72,761 canvases) of the full dataset are ordinary pages with text
 - **Legend examples (21 canvases)**: 11 positive (`Text present`) and 10 negative (`No text`) reference examples used in the annotation guidelines.
 
 {% include feature/button.html text="Browse Legend Examples (21)" link="/en/browse.html#verification:Legend example" color="primary" %}
-{% include feature/button.html text="Browse Stage 3 Author Corrections (13)" link="/en/browse.html#verification:Stage 3: Corrected by author" color="outline-dark" %}
+{% include feature/button.html text="Browse Stage 3 Author Corrections (12)" link="/en/browse.html#verification:Stage 3: Corrected by author" color="outline-dark" %}
 
 ---
 
@@ -45,17 +45,13 @@ This judgement does not require reading cursive script or knowing the work. If e
   - Watermark text overlaid on the digital image (e.g. "禁無断転載")
   - Ownership or shelf-mark labels pasted later by a library
 
-{% include feature/card.html header="Boundary Example (Text present): Small marginal note (c_100063689_0087)" text="Although the opening appears blank at first glance, a small handwritten note in the upper left corner counts as writing on the book (corrected from false to true by the author in Stage 3, Set B)." objectid="c_100063689_0087" %}
+{% include feature/card.html header="Boundary Example (Text present): Small marginal note (c_100063689_0087)" text="Although the opening appears blank at first glance, a small handwritten note in the upper left corner counts as writing on the book (corrected from false to true by the author in Stage 3, Set B). The image is not shown on this site because of the holding institution's terms of use. [View it in the Kokusho Database](https://kokusho.nijl.ac.jp/biblio/100063689/87)" %}
 
 {% include feature/card.html header="Boundary Example (No text): Library ownership label only (c_100421525_0002)" text="The cover carries only a modern printed library label with a call number, which was added after the book's production and is excluded under our criteria." objectid="c_100421525_0002" %}
 
-### (b) Work text (`is_work_text`)
+### (b) Ruler (`ruler`), colour chart (`colorchart`), and illustration (`illustration`)
 
-Assigned to images with text, indicating whether the writing belongs to the text compared across witnesses (body text, prefaces, postfaces, colophons, and tables of contents) rather than cover titles, authentication slips, or later annotations.
-
-### (c) Ruler (`ruler`), colour chart (`colorchart`), and illustration (`illustration`)
-
-Assigned to the 21,571 canvases inspected by the vision-language model in Stage 2. Scales printed along the edge of a colour chart are counted as part of the colour chart rather than as a separate ruler (in Stage 3 Set C, 4 canvases where the model mistook a colour-chart scale for a ruler were corrected by the author).
+Assigned to the 21,571 canvases inspected by the vision-language model in Stage 2. Scales printed along the edge of a colour chart are counted as part of the colour chart rather than as a separate ruler (in Stage 3 Set C, 4 canvases where the model mistook a colour-chart scale for a ruler were corrected by the author). In addition, 24 books in which the model marked a colour chart on only a few images were checked; on 3 black-and-white microfilm images the model had read a two-tone back cover or the scale of a ruler as a chart, and these were set to `false`.
 
 ---
 
@@ -63,7 +59,7 @@ Assigned to the 21,571 canvases inspected by the vision-language model in Stage 
 
 This site demonstrates the interoperability and reusability (FAIR principles) of the Zenodo TSV dataset by feeding it directly into [CollectionBuilder-CSV](https://github.com/CollectionBuilder/collectionbuilder-csv):
 
-1. **Non-custodial IIIF integration**: No image files are duplicated; thumbnails and zoomable images are requested on the fly from the Kokusho Database IIIF Image API.
+1. **Non-custodial IIIF integration**: No image files are duplicated; thumbnails and zoomable images are requested on the fly from the Kokusho Database IIIF Image API. Images are shown only for books released into the public domain or under a Creative Commons licence or with free reuse terms (466 books); for the other 248 books, each canvas shows its labels and a link to the Kokusho Database.
 2. **CJK full-text search and faceted filtering ([cjk_index](https://github.com/nakamura196/cjk_index))**: Stock `lunr.js` strips CJK characters by default. We use the `cjk_index` Ruby gem (`preset: collectionbuilder`) to provide fast character-bigram search, kanji variant normalization, and instant multi-facet counts across all 4,131 canvases.
 3. **Bilingual static builds**: Both Japanese and English interfaces are generated from the same repository.
 

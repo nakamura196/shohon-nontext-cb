@@ -110,6 +110,30 @@ def read_tsv(path):
         return list(csv.DictReader(f, delimiter="\t"))
 
 
+# creativecommons.org 以外で、自由に利用できると確かめた利用条件（2026-11-10、本人と確認）
+FREE_LICENSE_PREFIXES = (
+    "https://rmda.kulib.kyoto-u.ac.jp/license_icon/free-license",  # 京都大学貴重資料デジタルアーカイブ「自由利用」
+    "https://dl.ndl.go.jp/ja/help_iiif",  # 国立国会図書館デジタルコレクション（IIIF の利用について）
+)
+
+
+def is_open_license(url):
+    """パブリックドメイン（PDM・CC0）か CC ライセンス、または FREE_LICENSE_PREFIXES なら True。
+    それ以外（所蔵機関ごとの利用条件のページなど）は False とし、画像を出さない。"""
+    from urllib.parse import urlparse
+    u = url.strip()
+    host = urlparse(u).netloc.lower()
+    if host == "creativecommons.org" or host.endswith(".creativecommons.org"):
+        return True
+    return u.startswith(FREE_LICENSE_PREFIXES)
+
+
+NO_IMAGE_NOTE = (
+    "画像は所蔵機関の利用条件により、このサイトでは表示していません。国書データベースでご覧ください。",
+    "The image is not shown on this site because of the holding institution's terms of use. See it in the Kokusho Database.",
+)
+
+
 def tb(v):
     return str(v).lower() == "true"
 
@@ -131,6 +155,10 @@ def main():
         (r["bid"], int(r["canvas"])): r
         for r in read_tsv(O + "independent/sample.tsv")
     }
+    cc_fix = {
+        (r["bid"], int(r["canvas"])): r
+        for r in read_tsv(O + "objects-corrections.tsv")
+    }
     t2 = {}
     for g in sorted(glob.glob(O + "agy-text2/batch-*.json")):
         for x in json.load(open(g, encoding="utf-8")):
@@ -145,7 +173,6 @@ def main():
         "canvas_index",
         "kansha",
         "has_text",
-        "is_work_text",
         "page_type",
         "imaging_targets",
         "ruler",
@@ -174,6 +201,7 @@ def main():
 
     rows_ja = []
     rows_en = []
+    n_hidden = 0
 
     for c in canvases:
         bid = c["bid"]
@@ -204,9 +232,6 @@ def main():
 
         has_text_ja = "字あり" if tb(c["has_text"]) else "字なし"
         has_text_en = "Text present" if tb(c["has_text"]) else "No text"
-
-        is_work_ja = "作品の本文" if tb(c["is_work_text"]) else "非本文"
-        is_work_en = "Work text" if tb(c["is_work_text"]) else "Non-work text"
 
         pt = c["page_type"]
         pt_ja = PAGE_TYPE_JA.get(pt, pt)
@@ -279,9 +304,6 @@ def main():
             if hr["agy_colorchart"].lower() != hr["colorchart"].lower():
                 corr_ja.append(f"カラーチャートを修正（VLM:{hr['agy_colorchart'].lower()} → 著者:{hr['colorchart'].lower()}）")
                 corr_en.append(f"Colour chart corrected (VLM:{hr['agy_colorchart'].lower()} -> Author:{hr['colorchart'].lower()})")
-            if hr["agy_body"].lower() != hr["body"].lower():
-                corr_ja.append(f"作品の本文かを修正（規則初期値:{hr['agy_body'].lower()} → 著者:{hr['body'].lower()}）")
-                corr_en.append(f"Work text corrected (Rule:{hr['agy_body'].lower()} -> Author:{hr['body'].lower()})")
             if tb(hr["illust_checked"]) and hr["agy_illust"].lower() != hr["illust"].lower():
                 corr_ja.append(f"挿絵を修正（VLM:{hr['agy_illust'].lower()} → 著者:{hr['illust'].lower()}）")
                 corr_en.append(f"Illustration corrected (VLM:{hr['agy_illust'].lower()} -> Author:{hr['illust'].lower()})")
@@ -302,6 +324,12 @@ def main():
             else:
                 ver_ja.append("段4：第2判定者（字なし側100）")
                 ver_en.append("Stage 4: Second annotator (no-text 100)")
+
+        if key in cc_fix:
+            ver_ja.append("カラーチャートの一貫性確認で著者が修正")
+            ver_en.append("Colour chart corrected by author (consistency check)")
+            corr_ja.append(f"カラーチャートを修正（VLM:true → 著者:{cc_fix[key]['colorchart']}。{cc_fix[key]['note']}）")
+            corr_en.append(f"Colour chart corrected (VLM:true -> Author:{cc_fix[key]['colorchart']})")
 
         if t2.get(key) is True:
             ver_ja.append("段2：VLM第2パスで字ありに変更")
@@ -331,6 +359,11 @@ def main():
         fp_str = f"SHA-256: {c['sha256'][:16]}… / dHash: {c['dhash']}"
         kokusho_viewer = f"https://kokusho.nijl.ac.jp/biblio/{bid}/{idx}"
         lic = b.get("license", "")
+        show_image = is_open_license(lic)
+        if not show_image:
+            desc_parts_ja.append(NO_IMAGE_NOTE[0])
+            desc_parts_en.append(NO_IMAGE_NOTE[1])
+            n_hidden += 1
 
         common = {
             "objectid": objectid,
@@ -346,11 +379,11 @@ def main():
             "source": kokusho_viewer,
             "canvas_uri": c["canvas_uri"],
             "manifest": b.get("manifest_uri", f"https://kokusho.nijl.ac.jp/biblio/{bid}/manifest"),
-            "image_small": img_small,
-            "image_thumb": img_thumb,
-            "object_location": img_url,
-            "format": "image/jpeg",
-            "display_template": "image",
+            "image_small": img_small if show_image else "",
+            "image_thumb": img_thumb if show_image else "",
+            "object_location": img_url if show_image else "",
+            "format": "image/jpeg" if show_image else "",
+            "display_template": "image" if show_image else "record",
         }
 
         row_ja = dict(
@@ -359,7 +392,6 @@ def main():
             work=w_ja,
             kansha=kansha_ja,
             has_text=has_text_ja,
-            is_work_text=is_work_ja,
             page_type=pt_ja,
             imaging_targets=";".join(targets_ja),
             ruler=ruler_ja,
@@ -378,7 +410,6 @@ def main():
             work=w_en,
             kansha=kansha_en,
             has_text=has_text_en,
-            is_work_text=is_work_en,
             page_type=pt_en,
             imaging_targets=";".join(targets_en),
             ruler=ruler_en,
@@ -402,6 +433,7 @@ def main():
             w.writeheader()
             w.writerows(rows)
         print(f"Wrote {len(rows)} rows to {out_path}")
+    print(f"Image hidden (license not PD/CC/free): {n_hidden} of {len(rows_ja)} rows")
 
 
 if __name__ == "__main__":
