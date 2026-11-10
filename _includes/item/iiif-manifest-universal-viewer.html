@@ -1,0 +1,52 @@
+{% comment %}
+
+    Embed Universal Viewer to load item from an IIIF manifest file, https://github.com/UniversalViewer/universalviewer 
+    The manifest url is taken from (in order) the include parameter `manifest`, the item's `manifest` field, or its `object_location` field.
+    This include assumes that value is a relative link or direct url to a IIIF manifest json file. e.g. https://wellcomelibrary.org/iiif/b18035723/manifest 
+    If you are using an external manifest url, you may encounter CORS policy error if the server hosting the manifest is not set up correctly--one workaround is to download the json file, add to your "objects" folder, and use a relative link, e.g. "objects/book-manifest1.json". You do not need the images, just the manifest file!
+
+{% endcomment %}
+<!-- add IIIF Universal Viewer assets from CDN -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/universalviewer@4.4.4/dist/uv.css"/>
+<script src="https://cdn.jsdelivr.net/npm/universalviewer@4.4.4/dist/umd/UV.js"></script>
+<!-- add div for viewer -->
+<div class="uv" id="uv" style="width: 100%; height: 668px;"></div>
+<script>
+    // initialize Universal Viewer
+    var uvOptions = {
+        manifest: {{ include.manifest | default: page.manifest | default: page.object_location | relative_url | jsonify }}
+        // add options here!
+    };
+    var iiif_viewer = UV.init("uv", uvOptions);
+{%- assign uvLocale = site.data.uv_locale[site.lang] %}
+    // UV has no built-in locale for this site language: override its UI strings
+    var uvConfig = {{ uvLocale | default: nil | jsonify }} || {};
+    // the page shows the title and the rights below the viewer: drop UV's title bar and rights box
+    uvConfig.modules = uvConfig.modules || {};
+    ["centerPanel", "openSeadragonCenterPanel"].forEach(function (m) {
+        var mod = uvConfig.modules[m] = uvConfig.modules[m] || {};
+        mod.options = Object.assign(mod.options || {}, { titleEnabled: false, subtitleEnabled: false, requiredStatementEnabled: false });
+    });
+    iiif_viewer.on("configure", function ({ config, cb }) {
+        cb(Promise.resolve(uvConfig));
+    });
+{%- assign t = site.data.locale[site.lang] %}
+    // a button that copies the manifest URL, for pasting into another IIIF viewer
+    document.addEventListener("DOMContentLoaded", function () {
+        var links = document.getElementById("uv").closest(".iiif-item");
+        links = links && links.querySelector(".card-body");
+        if (!links || !navigator.clipboard) return;
+        var label = {{ t.copy_manifest_url | default: "Copy manifest URL" | jsonify }};
+        var btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "btn btn-outline-dark copy-manifest";
+        btn.textContent = label;
+        btn.addEventListener("click", function () {
+            navigator.clipboard.writeText(new URL(uvOptions.manifest, location.href).href).then(function () {
+                btn.textContent = {{ t.copied | default: "Copied" | jsonify }};
+                setTimeout(function () { btn.textContent = label; }, 2000);
+            });
+        });
+        links.insertBefore(btn, links.children[1] || null);
+    });
+</script>

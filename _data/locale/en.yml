@@ -1,0 +1,71 @@
+# English UI overrides for config-*.csv labels (applied by _plugins/cb_i18n.rb)
+config_labels:
+  config-nav:
+    /: Home
+    /browse.html: Browse & Filter
+    /search/: Search
+    /subjects.html: Summary Counts
+    /data.html: Data
+    /about.html: Criteria & About
+  config-metadata:
+    title: Title
+    work: Work
+    book_title: Book title (Kokusho DB)
+    bid: Kokusho DB ID (bid)
+    canvas_index: Canvas index
+    kansha: Manuscript / Printed
+    has_text: Text presence (has_text)
+    is_work_text: Work text (is_work_text)
+    page_type: Page type (page_type)
+    imaging_targets: Imaging targets & illustration
+    ruler: Ruler (ruler)
+    colorchart: Colour chart (colorchart)
+    illustration: Illustration (illustration)
+    verification: Verification & audit set
+    correction_detail: Stage 3 author correction
+    has_text_source: Label source (has_text_source)
+    p_text: Classifier probability (p_text)
+    ocr_chars: OCR character count (ocr_chars)
+    description: Notes & legend description
+    dimensions: Image dimensions & retrieval date
+    fingerprints: Image hashes (SHA-256 / dHash)
+    source: Open in Kokusho Database
+    canvas_uri: IIIF Canvas URI
+    manifest: IIIF Manifest
+    rights: Rights
+    rightsstatement: Licence
+  config-browse:
+    work: { display_name: Work, sort_name: Work, facet_name: Work }
+    has_text: { facet_name: Text presence }
+    page_type: { sort_name: Page type, facet_name: Page type }
+    imaging_targets: { facet_name: Imaging targets & illustration }
+    verification: { facet_name: Verification set }
+    kansha: { display_name: Format, sort_name: Format, facet_name: Format }
+    bid: { display_name: Book ID, sort_name: Book ID }
+    book_title: Book title
+    correction_detail: Correction detail
+    description: Notes
+  config-table:
+    title: Title
+    work: Work
+    bid: Book ID
+    canvas_index: Canvas
+    kansha: Format
+    has_text: Text presence
+    page_type: Page type
+    imaging_targets: Imaging targets
+    verification: Verification set
+template_labels:
+  iiif: IIIF image
+  image: Image
+view_source: View in Kokusho Database
+color_mode_toggle: Switch between light and dark
+copy_manifest_url: Copy manifest URL
+copied: Copied
+facet_heading: Filter by label or verification set
+facet_year: Year
+facet_clear: Clear filters
+facet_done: Show results
+view_mode: View mode
+view_grid: Grid
+view_list: List

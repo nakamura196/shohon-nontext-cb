@@ -1,0 +1,27 @@
+field,display_name,browse_link,external_link,dc_map,schema_map
+title,タイトル,,,DCTERMS.title,headline
+work,作品,true,,DCTERMS.isPartOf,isPartOf
+book_title,書名（国書DB）,,,,
+bid,国書DB書誌ID,true,,,
+canvas_index,コマ番号,,,,
+kansha,刊写（写本・版本）,true,,DCTERMS.type,
+has_text,字の有無（has_text）,true,,,
+is_work_text,作品の本文か（is_work_text）,true,,,
+page_type,ページ種別（page_type）,true,,,
+imaging_targets,撮影用具・挿絵,true,,,
+ruler,定規（ruler）,true,,,
+colorchart,カラーチャート（colorchart）,true,,,
+illustration,挿絵（illustration）,true,,,
+verification,検証・確認区分,true,,,
+correction_detail,著者確認での修正内容,,,,
+has_text_source,判定元（has_text_source）,true,,,
+p_text,分類器の確率（p_text）,,,,
+ocr_chars,OCR字数（ocr_chars）,,,,
+description,備考・凡例解説,,,DCTERMS.description,description
+dimensions,画像サイズ・取得日,,,DCTERMS.extent,
+fingerprints,画像ハッシュ（SHA-256 / dHash）,,,,
+source,国書データベース（該当コマを開く）,,true,DCTERMS.source,
+canvas_uri,IIIF Canvas URI,,true,,
+manifest,IIIFマニフェスト,,true,,
+rights,利用条件,,,DCTERMS.rights,license
+rightsstatement,ライセンス,,true,,

@@ -1,0 +1,97 @@
+##########
+# CollectionBuilder Theme Customization
+##########
+
+##########
+# LOOK
+#
+theme-style: modern
+color-mode-toggle: true
+
+##########
+# HOME PAGE
+#
+featured-image: c_300120319_0003
+featured-image-alt-text:
+home-title-y-padding: 8em
+home-banner-image-position: center
+
+##########
+# BROWSE PAGE
+#
+search-cjk: true
+advanced-search: true
+faceted-search: true
+default-sort-field: bid
+
+##########
+# ITEM PAGE
+#
+browse-buttons: true
+item-template-label: false
+citation-fields:
+
+##########
+# SUBJECTS PAGE
+#
+subjects-fields: page_type;verification;imaging_targets;work
+subjects-min: 1
+subjects-stopwords:
+
+##########
+# LOCATIONS PAGE
+#
+locations-fields:
+locations-min: 1
+locations-stopwords:
+
+##########
+# MAP PAGE
+#
+auto-center-map: true
+latitude: 35.68
+longitude: 139.76
+zoom-level: 5
+map-base: Esri_WorldStreetMap
+map-search: true
+map-search-fuzziness: 0.35
+map-cluster: true
+map-cluster-radius: 25
+
+##########
+# TIMELINE PAGE
+#
+timeline-field:
+year-navigation:
+year-nav-increment: 10
+
+##########
+# DATA
+#
+metadata-export-fields: "objectid,title,work,book_title,bid,canvas_index,kansha,has_text,is_work_text,page_type,imaging_targets,ruler,colorchart,illustration,verification,correction_detail,has_text_source,p_text,ocr_chars,dimensions,fingerprints,description,rights,source,canvas_uri,manifest"
+metadata-facets-fields: "has_text,page_type,imaging_targets,verification,work,kansha"
+
+##########
+# COMPOUND OBJECTS
+#
+map-child-objects: false
+timeline-child-objects: false
+data-child-objects: false
+browse-child-objects: false
+search-child-objects: false
+
+##########
+# ADVANCED OPTIONS
+#
+navbar-color: light
+navbar-background: bg-white
+bootswatch:
+
+base-font-size: 1.05em
+text-color: "#2b2a28"
+link-color: "#7a4a2a"
+base-font-family:
+font-cdn: '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Noto+Serif+JP:wght@500;600;700&display=swap" rel="stylesheet">'
+
+icons:
+  icon-back-to-top: arrow-up

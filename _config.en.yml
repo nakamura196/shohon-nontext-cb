@@ -1,0 +1,11 @@
+# English build of the same site. Build with:
+#   bundle exec jekyll build --config _config.yml,_config.en.yml -d _site/en
+lang: en
+baseurl: /shohon-nontext-cb/en
+metadata: shohon-nontext-en
+title: "Non-Text Pages and Verification Samples from 714 Classical Japanese Book Witnesses"
+tagline: "Visual verification collection for text-presence and imaging-target labels (CollectionBuilder × IIIF)"
+description: "Browsable collection of all 3,620 non-text page images and 629 human-verified sample images (4,131 canvases in total) across 714 witnesses of five Japanese classical works from the NIJL Kokusho Database."
+keywords: Japanese classical books; IIIF; non-text pages; colour charts; rulers; vision-language models; CollectionBuilder
+organization-name: "NIJL Union Catalogue Database of Japanese Texts (Kokusho Database)"
+organization-link: https://kokusho.nijl.ac.jp/?ln=en

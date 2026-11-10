@@ -1,0 +1,14 @@
+field,index,display
+title,true,true
+work,true,true
+book_title,true,true
+bid,true,false
+kansha,true,false
+has_text,true,true
+is_work_text,true,false
+page_type,true,true
+imaging_targets,true,true
+verification,true,true
+correction_detail,true,true
+description,true,true
+image_thumb,false,false

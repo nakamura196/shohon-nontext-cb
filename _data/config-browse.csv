@@ -1,0 +1,11 @@
+field,display_name,btn,hidden,sort_name,facet_name
+work,,true,,作品,作品
+has_text,,true,,,字の有無
+page_type,,true,,ページ種別,ページ種別
+imaging_targets,,true,,,撮影用具・挿絵
+verification,,true,,,検証・確認区分
+kansha,刊写,,,刊写,刊写
+bid,書誌ID,,true,書誌ID,
+book_title,書名,,true,,
+correction_detail,修正内容,,true,,
+description,備考,,true,,

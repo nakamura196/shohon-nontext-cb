@@ -1,0 +1,10 @@
+field,display_name
+title,タイトル
+work,作品
+bid,書誌ID
+canvas_index,コマ
+kansha,刊写
+has_text,字の有無
+page_type,ページ種別
+imaging_targets,撮影用具・挿絵
+verification,検証区分

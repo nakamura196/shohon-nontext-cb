@@ -1,0 +1,61 @@
+##########
+# collectionbuilder-csv
+# Jekyll Digital Collection Generator
+# https://github.com/CollectionBuilder/collectionbuilder-csv
+##########
+
+##########
+# URL VARIABLES
+#
+url: https://nakamura196.github.io
+baseurl: /shohon-nontext-cb
+source-code: https://github.com/nakamura196/shohon-nontext-cb
+
+##########
+# SITE SETTINGS
+#
+lang: ja
+languages:
+  - code: ja
+    label: 日本語
+    baseurl: /shohon-nontext-cb
+  - code: en
+    label: English
+    baseurl: /shohon-nontext-cb/en
+title: 古典籍諸本714冊の非本文コマ・検証サンプル検索
+tagline: 字の有無・撮影用具ラベルの視覚的検証コレクション（CollectionBuilder × IIIF × cjk_index）
+description: "国書データベースで公開されている5作品（伊勢物語・古今和歌集・枕草子・竹取物語・徒然草）の諸本714冊（76,381コマ）から、字なしと判定された全3,620コマおよび人間が確認・検証した629コマ（計4,131コマ）をIIIF画像とともに横断検索・検証できるデジタルコレクションです。"
+keywords: 古典籍; 諸本; IIIF; 非本文コマ; カラーチャート; 定規; 視覚言語モデル; CollectionBuilder
+author: nakamura196
+
+##########
+# COLLECTION SETTINGS
+#
+metadata: shohon-nontext
+
+##########
+# ORGANIZATION SETTINGS
+#
+organization-name: "国文学研究資料館「国書データベース」（画像提供）"
+organization-link: https://kokusho.nijl.ac.jp/
+organization-logo-banner:
+organization-logo-nav:
+
+##########
+# BUILD SETTINGS
+#
+lib-assets: /assets/lib
+exclude: [vendor/, docs/, Rakefile, rakelib/, README.md, LICENSE, CITATION.cff, CODE_OF_CONDUCT.md, CONTRIBUTING.md, SECURITY.md, AGENTS.md, CLAUDE.md, HUMANS.md]
+sass:
+  style: compressed
+
+##########
+# CJK SEARCH (cjk_index gem)
+#
+cjk_index:
+  variants: [ja]
+  indexes:
+    - name: search
+      preset: collectionbuilder
+
+theme: cb-museum-theme
