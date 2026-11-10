@@ -5,8 +5,11 @@
 ##########
 # LOOK
 #
-theme-style: modern
-color-mode-toggle: true
+theme-style: modern       # modern / museum
+color-mode-toggle: true   # light / dark switch in navbar
+view-mode-toggle: true    # grid / list switch on Browse & Search (default: true)
+default-view: grid        # initial layout for Browse & Search: grid / list (default: grid)
+thumb-fit: contain        # thumbnail sizing: contain (whole image, default) / cover (cropped to 4:3)
 
 ##########
 # HOME PAGE

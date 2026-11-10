@@ -28,4 +28,4 @@ group :jekyll_plugins do
 end
 
 # modern / museum looks and the light/dark switch (see the theme's README)
-gem 'cb-museum-theme', git: 'https://github.com/nakamura196/cb-museum-theme.git', ref: 'bd62b740c4b6f713606ba5b73e1a09fec0585515'
+gem 'cb-museum-theme', git: 'https://github.com/nakamura196/cb-museum-theme.git', ref: 'a4aa7f07e1e7b751602c3c390c7b2f3c4b626497'
